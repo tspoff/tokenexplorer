@@ -1,0 +1,38 @@
+{
+  "name": "tokenexplorer",
+  "version": "1.0.0",
+  "description": "Deploy Next.js server-side React apps using a custom Express server to Heroku",
+  "scripts": {
+    "dev": "node server.js -p $PORT",
+    "build": "next build",
+    "heroku-postbuild": "next build",
+    "start": "node server.js -p $PORT"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "mongodb": "^3.1.0-beta4",
+    "next": "^4.2.3",
+    "next-routes": "^1.4.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "semantic-ui-react": "^0.80.0",
+    "superagent": "^3.8.3",
+    "web3": "^1.0.0-beta.34",
+    "axios": "0.15.3",
+    "body-parser": "1.15.2",
+    "compression": "1.6.2",
+    "express-session": "1.14.2",
+    "jquery": "^3.1.1",
+    "moment": "^2.17.1",
+    "path-match": "^1.2.4",
+    "react-if": "^2.1.0",
+    "react-router": "^3.0.2",
+    "url": "^0.11.0"
+  },
+  "engines": {
+    "node": "6.11.x"
+  }
+}
