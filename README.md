@@ -1,37 +1,42 @@
 
-# Next.js w/ Custom Express Server example for Heroku
+# Ethereum Token Explorer
 
-## How to use
+## Development - Steps to MVP
+#### 1. Gather more historical tx records to database
+We want a record of all transfer events from each ERC20 token. This will be stored in our database.
+This is done for the test token, and needs to be repeated for more tokens. Straitforward, and takes some minutes per token.
 
-```bash
-git clone https://github.com/mars/heroku-nextjs-custom-server-express
-cd heroku-nextjs-custom-server-express
-```
+#### 2. Pre-process data for visualization
+We want to visualize the 'rich list' on each historical block, for each token.
+This will involve calculating the balances of each address based on the transfer records up until that point, and storing this in the database.
+The front end will load the top-x addresses for a given block / day (as many as is reasonable) via database query.
 
-Install it and run:
+#### 3. Visualize data
+Using D3, we'll render a visual of the data, hopefully involving circles of various sizes.
+Users can go between blocks and see how things change over time.
 
-```bash
-npm install
-npm run dev
-```
+#### 4. UI Polish
+Using semantic-ui-react to make things look decent, basic responsivness.
 
-Deploy it to the cloud with [Heroku](https://www.heroku.com)
+#### 5. Readme / Repo Polish
+Have gifs showing the different actions you can take on the site, and showing off visualizations.
 
-```bash
-git init
-(echo node_modules/ && echo .next/) >> .gitignore
-heroku create
-git add .
-git commit -m 'Next.js app on Heroku'
-git push heroku master
-```
+## Development - Further Goals
 
-## The idea behind the example
+#### 1. Real-time data gathering
+The server will continually look for new blocks, and will get the Transfer events for the relevant tokens. These will be added to the database. 
 
-*A version of [Next's example/custom-server-express](https://github.com/zeit/next.js/tree/master/examples/custom-server-express) revised to [deploy to Heroku](https://github.com/mars/heroku-nextjs).*
+#### 2. Visualizaion animations
+It would be nice to show an animation of how the rich list changes over time.
 
-Most of the times the default Next server will be enough but sometimes you want to run your own server to customize routes or other kind of the app behavior. Next provides a [Custom server and routing](https://github.com/zeit/next.js#custom-server-and-routing) so you can customize as much as you want.
+#### 3. Basic ERC721 Support
+Using the same event-gathering method, show things like the crypto-kitties rich list, based on previous auction sale prices of kitties.
 
-Because the Next.js server is just a node.js module you can combine it with any other part of the node.js ecosystem. in this case we are using express to build a custom router on top of Next.
+## Page Goals
+#### Block explorer basics
+Look through a block and see all the transfer events that went on for a token in that block
 
-The example shows a server that serves the component living in `pages/a.js` when the route `/b` is requested and `pages/b.js` when the route `/a` is accessed. This is obviously a non-standard routing strategy. You can see how this custom routing is being made inside `server.js`.
+#### Historical rich-lists for each ERC20 token
+Can go through each day and see where tokens are moving to and from
+
+#### Historical rich-lists for each ERC721 token
