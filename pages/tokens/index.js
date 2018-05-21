@@ -4,21 +4,14 @@ import Link from 'next/link';
 import Layout from '../../components/Layout';
 import _ from 'lodash';
 
+import * as tokenList from '../../util/tokenList';
+
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
 
 class TokenList extends Component {
     state = {
-        tokens: [
-            {
-                'name': 'Status Network',
-                'address': '0x744d70FDBE2Ba4CF95131626614a1763DF805B9E'
-            },
-            {
-                'name': 'EOS',
-                'address': '0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0'
-            },
-        ],
+        tokens: [],
         curr_block: null
     }
 
@@ -26,8 +19,13 @@ class TokenList extends Component {
         console.log(await web3.eth.getAccounts());
         var curr_block_no = await web3.eth.getBlockNumber();
         console.log(curr_block_no);
+
+        const tokens = tokenList.tokens;
+        console.log(tokens);
+
         this.setState({
-            curr_block: curr_block_no
+            curr_block: curr_block_no,
+            tokens: tokens
         });
 
         this.getBlocks(curr_block_no);
@@ -44,6 +42,7 @@ class TokenList extends Component {
             block_ids.push(currBlockObj.number);
             block_hashes.push(currBlockObj.hash);
         }
+
         this.setState({
             block_ids: block_ids,
             block_hashes: block_hashes
@@ -51,12 +50,17 @@ class TokenList extends Component {
     }
 
     render() {
+        const {tokens} = this.state;
+
         var tableRows = [];
-        _.each(this.state.tokens, (value, index) => {
+        _.each(tokens, (value, index) => {
+
+            const imgSrc = `/static/images/${tokens[index].icon}.png`
             tableRows.push(
                 <tr key={this.state.tokens[index]}>
-                    <td className="tdCenter">{this.state.tokens[index].name}</td>
-                    <td><Link href={`/tokens/${this.state.tokens[index].address}`}>{this.state.tokens[index].name}</Link></td>
+                    <td><img src={imgSrc}/></td>
+                    <td className="tdCenter">{tokens[index].name}</td>
+                    <td><Link href={`/tokens/${tokens[index].address}`}>{tokens[index].name}</Link></td>
                 </tr>
             )
         });

@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import Layout from '../../components/Layout';
 
-import Coursetro from '../../ethereum/Coursetro';
 import ERC20 from '../../ethereum/ERC20';
 import web3 from '../../ethereum/web3';
 

@@ -14,7 +14,7 @@ const collectData = async () => {
         let records;
         let addresses;
 
-        let startBlock = 0;
+        let startBlock = 47 * BLOCKS_PER_QUERY;
         const tokenContract = ERC20(token.address);
 
         //TODO: find latest block

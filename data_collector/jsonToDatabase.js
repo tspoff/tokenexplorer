@@ -1,9 +1,9 @@
 const fs = require('fs');
 const mongodb = require('mongodb');
 
-const START_BLOCK = 3800000;
-const END_BLOCK = 4800000;
+const START_BLOCK = 0;
 const BLOCKS_PER_FILE = 100000;
+const END_BLOCK = 57 * BLOCKS_PER_FILE;
 
 const jsonToDatabase = async () => {
 
@@ -28,18 +28,26 @@ const jsonToDatabase = async () => {
              * songs collection; it is created automatically when we insert.
              */
 
-            let transferRecords = db.collection('transferRecords');
+            let transferRecords = db.collection('transfers');
 
             // Note that the insert method can take either an array or a dict.
 
             for (let i = START_BLOCK; i < END_BLOCK; i += BLOCKS_PER_FILE) {
 
-                const records = JSON.parse(fs.readFileSync(`./EOSTransferRecords-${i}-${i + BLOCKS_PER_FILE}.json`));
+                const records = JSON.parse(fs.readFileSync(`./data_collector/data/Status NetworkTransferRecords-${i}-${i + BLOCKS_PER_FILE}.json`));
+
+                if (records == null || records == undefined || records.length === 0) {
+                    console.log("Empty record");
+                    continue;
+                }
+
+                for (let record of records) {
+                    record.tokenId = "SNT";
+                }
+                
+                console.log(records);
 
                 transferRecords.insert(records, function (err, result) {
-
-                    console.log("content", records);
-
                     if (err) throw err;
 
                     /*
@@ -57,7 +65,7 @@ const jsonToDatabase = async () => {
                     //     });
 
                     // });
-                });
+                 });
             }
 
             // client.close(function (err) {
